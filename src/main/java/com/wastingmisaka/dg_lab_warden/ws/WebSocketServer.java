@@ -35,9 +35,7 @@ public class WebSocketServer extends WebSocketAdapter {
         System.out.println("Received message: " + message);
         try {
             get_data(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
     }
 
     @Override
