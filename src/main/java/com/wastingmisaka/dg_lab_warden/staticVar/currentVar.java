@@ -7,5 +7,7 @@ public class currentVar {
     public static int a_max = 0;
     public static int b_max = 0;
 
+    // 一键开火记录数值
+    public static int fire_current = 30;
     // TODO +波形
 }

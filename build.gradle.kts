@@ -44,5 +44,7 @@ tasks {
         implementation("org.eclipse.jetty:jetty-server:9.4.43.v20210629")
         implementation("org.eclipse.jetty.websocket:websocket-server:9.4.43.v20210629")
         implementation("org.eclipse.jetty.websocket:javax-websocket-server-impl:9.4.43.v20210629")
+        implementation("com.google.zxing:core:3.5.1")
+        implementation("com.google.zxing:javase:3.5.1")
     }
 }

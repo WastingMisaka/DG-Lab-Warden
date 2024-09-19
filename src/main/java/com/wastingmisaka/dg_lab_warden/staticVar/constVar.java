@@ -1,17 +1,14 @@
 package com.wastingmisaka.dg_lab_warden.staticVar;
 // 常量
 public class constVar {
-    // 二维码地址
-    public static final String URL =
-            "https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#ws://192.168.37.232:8080/Server";
+    // 二维码前缀
+    public static String URL_prefix = "https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#ws://";
+    // 二维码后缀
+    public static String URL_suffix = "/Server";
 
-    // 服务器端口号
-    public static final String Port = "8080";
-
-    // 服务端的实际地址
-    public static final String SERVER_URL = "ws://192.168.37.232:8080/Server";
-
-    // 软件限制的电流最大强度
+    // 软件限制的电流强度上下限
+    public static final int A_MIN = 0;
+    public static final int B_MIN = 0;
     public static final int A_MAX = 200;
     public static final int B_MAX = 200;
 

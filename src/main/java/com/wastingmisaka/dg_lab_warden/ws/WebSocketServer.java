@@ -4,12 +4,14 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 
 import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.*;
+import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.progress_session;
 
 import java.io.IOException;
 
 public class WebSocketServer extends WebSocketAdapter {
     @Override
     public void onWebSocketConnect(Session session) {
+        progress_session = session;
         super.onWebSocketConnect(session);
         System.out.println("WebSocket opened: " + session.getRemoteAddress().getHostString());
         // 发送绑定信息
@@ -26,8 +28,6 @@ public class WebSocketServer extends WebSocketAdapter {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @Override
@@ -44,6 +44,7 @@ public class WebSocketServer extends WebSocketAdapter {
     public void onWebSocketClose(int statusCode, String reason) {
         super.onWebSocketClose(statusCode, reason);
         System.out.println("WebSocket closed: " + statusCode + " - " + reason);
+        progress_session = null;
     }
 
     @Override
@@ -64,5 +65,10 @@ public class WebSocketServer extends WebSocketAdapter {
             a_max = Integer.parseInt(split[2]);
             b_max = Integer.parseInt(split[3]);
         }
+    }
+
+    public void user_close(){
+        getSession().close();
+        System.out.println("-----user_close-=-------");
     }
 }
