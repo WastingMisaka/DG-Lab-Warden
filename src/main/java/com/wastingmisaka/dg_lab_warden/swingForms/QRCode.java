@@ -21,7 +21,6 @@ public class QRCode {
             BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, width, height, hints);
             return MatrixToImageWriter.toBufferedImage(bitMatrix);
         } catch (WriterException e) {
-            e.printStackTrace();
             return null;
         }
     }
