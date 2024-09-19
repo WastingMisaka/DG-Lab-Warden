@@ -66,9 +66,4 @@ public class WebSocketServer extends WebSocketAdapter {
             b_max = Integer.parseInt(split[3]);
         }
     }
-
-    public void user_close(){
-        getSession().close();
-        System.out.println("-----user_close-=-------");
-    }
 }
