@@ -12,7 +12,7 @@ public class WebSocketServer extends WebSocketAdapter {
     public void onWebSocketConnect(Session session) {
         super.onWebSocketConnect(session);
         System.out.println("WebSocket opened: " + session.getRemoteAddress().getHostString());
-
+        // 发送绑定信息
         //{"clientId":"APP","message":"targetId","targetId":"","type":"bind"}
         //Message(type=bind, message=200, clientId=Server, targetId=APP)
         try {
@@ -53,8 +53,9 @@ public class WebSocketServer extends WebSocketAdapter {
     }
 
     public void get_data(String msg){
-        int st = msg.indexOf('-');
+        int st = msg.indexOf("th-");
         if(st!=-1){
+            st+=2;
             int ed = msg.indexOf("\",\"ta");
             String sub_msg = msg.substring(st+1, ed);
             String[] split = sub_msg.split("\\+");

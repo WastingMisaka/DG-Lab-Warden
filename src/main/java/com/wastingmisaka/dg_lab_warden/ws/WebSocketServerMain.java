@@ -9,7 +9,7 @@ import java.net.InetSocketAddress;
 public class WebSocketServerMain {
     public static void main(String[] args) {
         System.out.println("-=-=-=WebSocketServerMain-=-=-=");
-        InetSocketAddress addr = new InetSocketAddress("192.168.8.155", 8080);
+        InetSocketAddress addr = new InetSocketAddress("192.168.37.232", 8080);
         Server server = new Server(addr);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
