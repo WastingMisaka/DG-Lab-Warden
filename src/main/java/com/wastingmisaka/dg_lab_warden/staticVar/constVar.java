@@ -2,9 +2,9 @@ package com.wastingmisaka.dg_lab_warden.staticVar;
 // 常量
 public class constVar {
     // 二维码前缀
-    public static String URL_prefix = "https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#ws://";
+    public static final String URL_prefix = "https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#ws://";
     // 二维码后缀
-    public static String URL_suffix = "/Server";
+    public static final String URL_suffix = "/Server";
 
     // 软件限制的电流强度上下限
     public static final int A_MIN = 0;

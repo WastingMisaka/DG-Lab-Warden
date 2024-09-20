@@ -22,7 +22,6 @@ import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.*;
 import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.*;
 
 // 窗体
-// TODO 电流label 按钮功能 Timer
 public class FormsButTheOnlyOne implements ToolWindowFactory {
 
     private JButton switcher;
