@@ -4,6 +4,7 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 
 import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.*;
+import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.progress_server;
 import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.progress_session;
 
 import java.io.IOException;
