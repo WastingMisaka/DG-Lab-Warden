@@ -14,7 +14,23 @@ public class MessageSender {
         if(type.equals("strength")){
             String msg_ = MSG + "strength-" +msg + MSG_end;
             progress_session.getRemote().sendString(msg_);
+            //log
+            System.out.println("Sended strength: "+msg_);
         }
+        if(type.equals("wave")){
+            String msg_ = MSG + "pulse-A:[" +msg + "]" +MSG_end;
+            progress_session.getRemote().sendString(msg_);
 
+            msg_ = MSG + "pulse-B:[" +msg + "]" +MSG_end;
+            progress_session.getRemote().sendString(msg_);
+            //log
+            System.out.println("Sended pulse-data: "+msg_);
+        }
+        if(type.equals("heartbeat")){
+            String msg_ = MSG + "heartbeat" + MSG_end;
+            progress_session.getRemote().sendString(msg_);
+            //log
+            System.out.println("Sended heartbeat: "+msg_);
+        }
     }
 }

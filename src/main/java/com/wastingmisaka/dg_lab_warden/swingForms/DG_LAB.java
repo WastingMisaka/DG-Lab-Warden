@@ -14,6 +14,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -22,7 +24,7 @@ import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.*;
 import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.*;
 
 // 窗体
-public class FormsButTheOnlyOne implements ToolWindowFactory {
+public class DG_LAB implements ToolWindowFactory {
 
     private JButton switcher;
     private JLabel a_current_show;
@@ -31,7 +33,7 @@ public class FormsButTheOnlyOne implements ToolWindowFactory {
     private JLabel b_max_show;
     private JButton set_zero;
     private JButton test111;
-    private JSlider A_current_slider;
+    private JSlider fire_slider;
     private JButton FIRE;
     private JPanel mainPanel;
     private JTextField ip_text;
@@ -40,6 +42,10 @@ public class FormsButTheOnlyOne implements ToolWindowFactory {
     private JLabel QRCode_show;
     private JLabel server_status;
     private JLabel session_status;
+    private JSlider current_slider;
+    private JCheckBox a_current_checkbox;
+    private JCheckBox b_current_checkbox;
+    private JLabel p;
 
     MessageSender messageSender = new MessageSender();
     public JComponent getComponent() {
@@ -52,6 +58,8 @@ public class FormsButTheOnlyOne implements ToolWindowFactory {
         update_connect_status.start();
     }
     public void init_(){
+        // 加载wave波形
+        wave_init();
         // 初始化默认值
         ip_text.setText(IP);
         port_text.setText(Port);
@@ -106,7 +114,7 @@ public class FormsButTheOnlyOne implements ToolWindowFactory {
           // 开火设置成不能自行在APP降低强度？
         FIRE.addActionListener(f -> {
             if(firing == 0){
-                fire_current = A_current_slider.getValue();
+                fire_current = fire_slider.getValue();
                 try {
                     messageSender.send_message("1+1+"+fire_current,"strength");
                     messageSender.send_message("2+1+"+fire_current,"strength");
@@ -130,21 +138,47 @@ public class FormsButTheOnlyOne implements ToolWindowFactory {
         });
            // 测试用按钮
         test111.addActionListener(g -> {
-            JOptionPane.showMessageDialog(null,"一键开火："+A_current_slider.getValue(),"提示",JOptionPane.INFORMATION_MESSAGE);
+            String sender = wave.get("呼吸");
+            String tipMsg = sender;
+            JOptionPane.showMessageDialog(null,tipMsg,"提示",JOptionPane.INFORMATION_MESSAGE);
+            try {
+                messageSender.send_message(sender,"wave");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         });
 
         // TrackBar
         {
-            A_current_slider.setMinimum(0);
-            A_current_slider.setMaximum(200);
-
-            A_current_slider.addChangeListener(new ChangeListener() {
+            fire_slider.setMinimum(0);
+            fire_slider.setMaximum(200);
+            fire_slider.addChangeListener(new ChangeListener() {
                 @Override
                 public void stateChanged(ChangeEvent e) {
-                    slider_label.setText("一键开火："+A_current_slider.getValue());
+                    slider_label.setText("一键开火："+ fire_slider.getValue());
+                }
+            });
+            current_slider.setMinimum(0);
+            current_slider.setMaximum(200);
+
+            current_slider.addChangeListener(new ChangeListener(){
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    try{
+                        if(a_current_checkbox.isSelected()){
+                            messageSender.send_message("1+2+"+current_slider.getValue(),"strength");
+                        }
+                        if(b_current_checkbox.isSelected()){
+                            messageSender.send_message("2+2+"+current_slider.getValue(),"strength");
+                        }
+                    }catch (Exception hso){
+                        hso.printStackTrace();
+                    }
                 }
             });
         }
+
     }
 
     Timer update_current = new Timer(1000, e -> {
