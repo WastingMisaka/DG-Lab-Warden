@@ -1,5 +1,9 @@
 package com.wastingmisaka.dg_lab_warden;
 
+import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
+
 import java.util.Scanner;
 
 public class test {

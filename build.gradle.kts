@@ -12,7 +12,7 @@ repositories {
 
 intellij {
     version.set("2023.2.6")
-    type.set("IC") // Target IDE Platform
+    type.set("IC") // Target IDE Platform IC/IU
 
     plugins.set(listOf(/* Plugin Dependencies */))
 }
@@ -46,5 +46,6 @@ tasks {
         implementation("org.eclipse.jetty.websocket:javax-websocket-server-impl:9.4.43.v20210629")
         implementation("com.google.zxing:core:3.5.1")
         implementation("com.google.zxing:javase:3.5.1")
+        implementation ("org.jetbrains:annotations:23.0.0")
     }
 }

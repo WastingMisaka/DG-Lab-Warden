@@ -32,5 +32,6 @@ public class MessageSender {
             //log
             System.out.println("Sended heartbeat: "+msg_);
         }
+
     }
 }

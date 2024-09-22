@@ -5,6 +5,7 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import com.wastingmisaka.dg_lab_warden.Inspection.StaticCodeChecker;
 import com.wastingmisaka.dg_lab_warden.messageUtils.MessageSender;
 import com.wastingmisaka.dg_lab_warden.ws.wsThread;
 import org.jetbrains.annotations.NotNull;
@@ -14,8 +15,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -46,6 +45,8 @@ public class DG_LAB implements ToolWindowFactory {
     private JCheckBox a_current_checkbox;
     private JCheckBox b_current_checkbox;
     private JLabel p;
+    private JCheckBox 错误30CheckBox;
+    private JCheckBox 警告5CheckBox;
 
     MessageSender messageSender = new MessageSender();
     public JComponent getComponent() {
@@ -53,6 +54,7 @@ public class DG_LAB implements ToolWindowFactory {
     }
 
     public void run(){
+        new StaticCodeChecker().start();
         init_();
         update_current.start();
         update_connect_status.start();
@@ -78,6 +80,7 @@ public class DG_LAB implements ToolWindowFactory {
                     JOptionPane.showMessageDialog(null,"IP地址不合法","错误",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                // 开启 ws
                 new wsThread().start();
                 // 生成并显示二维码
                 control_QRCode();
@@ -136,16 +139,8 @@ public class DG_LAB implements ToolWindowFactory {
                 FIRE.setText("一键开火");
             }
         });
-           // 测试用按钮
+        // 测试用按钮
         test111.addActionListener(g -> {
-            String sender = wave.get("呼吸");
-            String tipMsg = sender;
-            JOptionPane.showMessageDialog(null,tipMsg,"提示",JOptionPane.INFORMATION_MESSAGE);
-            try {
-                messageSender.send_message(sender,"wave");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
 
         });
 

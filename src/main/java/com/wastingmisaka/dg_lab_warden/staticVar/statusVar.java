@@ -19,5 +19,9 @@ public class statusVar {
     // 当前和客户端建立的ws会话
     public static Session progress_session;
 
+    // 当前页面警告数
+    public static long warning_count = 0;
+    // 当前页面错误数
+    public static long error_count = 0;
 
 }
