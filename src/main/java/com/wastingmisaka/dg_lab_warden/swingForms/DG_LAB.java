@@ -5,14 +5,16 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
-import com.wastingmisaka.dg_lab_warden.Inspection.StaticCodeChecker;
+import com.wastingmisaka.dg_lab_warden.Threads.StaticCodeChecker;
+import com.wastingmisaka.dg_lab_warden.Threads.inspectionPunish;
+import com.wastingmisaka.dg_lab_warden.Threads.pulse_send;
 import com.wastingmisaka.dg_lab_warden.messageUtils.MessageSender;
 import com.wastingmisaka.dg_lab_warden.ws.wsThread;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -32,21 +34,20 @@ public class DG_LAB implements ToolWindowFactory {
     private JLabel b_max_show;
     private JButton set_zero;
     private JButton test111;
-    private JSlider fire_slider;
     private JButton FIRE;
     private JPanel mainPanel;
     private JTextField ip_text;
     private JTextField port_text;
-    private JLabel slider_label;
     private JLabel QRCode_show;
     private JLabel server_status;
     private JLabel session_status;
-    private JSlider current_slider;
     private JCheckBox a_current_checkbox;
     private JCheckBox b_current_checkbox;
-    private JLabel p;
     private JCheckBox 错误30CheckBox;
     private JCheckBox 警告5CheckBox;
+    private JList pulse_select;
+    private JSpinner fire_spinner;
+    private JLabel fire_label;
 
     MessageSender messageSender = new MessageSender();
     public JComponent getComponent() {
@@ -54,8 +55,11 @@ public class DG_LAB implements ToolWindowFactory {
     }
 
     public void run(){
+        new pulse_send().start();
         new StaticCodeChecker().start();
+        new inspectionPunish().start();
         init_();
+        // 启动计时器
         update_current.start();
         update_connect_status.start();
     }
@@ -107,8 +111,8 @@ public class DG_LAB implements ToolWindowFactory {
            // 归零按钮
         set_zero.addActionListener(g ->{
             try {
-                messageSender.send_message("1+2+0","strength");
-                messageSender.send_message("2+2+0","strength");
+                messageSender.message_entry("strength",1,"2",0);
+                messageSender.message_entry("strength",2,"2",0);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -117,10 +121,10 @@ public class DG_LAB implements ToolWindowFactory {
           // 开火设置成不能自行在APP降低强度？
         FIRE.addActionListener(f -> {
             if(firing == 0){
-                fire_current = fire_slider.getValue();
+                fire_current = (int)fire_spinner.getValue();
                 try {
-                    messageSender.send_message("1+1+"+fire_current,"strength");
-                    messageSender.send_message("2+1+"+fire_current,"strength");
+                    messageSender.message_entry("strength",1,"1",fire_current);
+                    messageSender.message_entry("strength",2,"1",fire_current);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -129,8 +133,8 @@ public class DG_LAB implements ToolWindowFactory {
                 FIRE.setText("停止开火");
             }else{
                 try {
-                    messageSender.send_message("1+0+"+fire_current,"strength");
-                    messageSender.send_message("2+0+"+fire_current,"strength");
+                    messageSender.message_entry("strength",1,"0",fire_current);
+                    messageSender.message_entry("strength",2,"0",fire_current);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -141,46 +145,42 @@ public class DG_LAB implements ToolWindowFactory {
         });
         // 测试用按钮
         test111.addActionListener(g -> {
-
+            try {
+                messageSender.message_entry("pulse",1,"节奏步伐",30);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
-        // TrackBar
+        //波形选择面板
+        String[] options1 = {"呼吸","潮汐","连击","快速按捏","按捏渐强",
+            "心跳节奏","压缩","节奏步伐","颗粒摩擦","渐变弹跳","波浪涟漪",
+                "雨水冲刷","变速敲击","信号灯","挑逗01","挑逗02"
+        };
+        pulse_select.setListData(options1);
+        pulse_select.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        pulse_select.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(!e.getValueIsAdjusting()){
+                    String selected = (String)pulse_select.getSelectedValue();
+                    System.out.println("---selected pulse: "+selected);
+                    current_pulse = selected;
+                }
+            }
+        });
+
         {
-            fire_slider.setMinimum(0);
-            fire_slider.setMaximum(200);
-            fire_slider.addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    slider_label.setText("一键开火："+ fire_slider.getValue());
-                }
-            });
-            current_slider.setMinimum(0);
-            current_slider.setMaximum(200);
+            fire_spinner.setModel(new SpinnerNumberModel(30, 0, 200, 5));
 
-            current_slider.addChangeListener(new ChangeListener(){
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    try{
-                        if(a_current_checkbox.isSelected()){
-                            messageSender.send_message("1+2+"+current_slider.getValue(),"strength");
-                        }
-                        if(b_current_checkbox.isSelected()){
-                            messageSender.send_message("2+2+"+current_slider.getValue(),"strength");
-                        }
-                    }catch (Exception hso){
-                        hso.printStackTrace();
-                    }
-                }
-            });
         }
-
     }
 
     Timer update_current = new Timer(1000, e -> {
-        a_current_show.setText("A通道强度："+a_current);
-        b_current_show.setText("B通道强度："+b_current);
-        a_max_show.setText("A通道上限："+a_max);
-        b_max_show.setText("B通道上限："+b_max);
+        a_current_show.setText("A通道强度："+current_current[1]);
+        b_current_show.setText("B通道强度："+current_current[2]);
+        a_max_show.setText("A通道上限："+current_max[1]);
+        b_max_show.setText("B通道上限："+current_max[2]);
     });
 
     Timer update_connect_status = new Timer(1000, e -> {

@@ -1,4 +1,4 @@
-package com.wastingmisaka.dg_lab_warden.Inspection;
+package com.wastingmisaka.dg_lab_warden.Threads;
 
 import com.intellij.codeInsight.daemon.impl.DaemonCodeAnalyzerImpl;
 import com.intellij.codeInsight.daemon.impl.HighlightInfo;
@@ -37,7 +37,9 @@ public class StaticCodeChecker extends Thread{
                         long errors = highlightInfos.stream()
                                 .filter(info -> info.getSeverity() == HighlightSeverity.ERROR)
                                 .count();
-                        System.out.println("warning: "+warnings+" error: "+errors);
+                        // 更新当前的错误数和警告数
+                        warning_count = warnings;
+                        error_count = errors;
                     }
                 }
             }

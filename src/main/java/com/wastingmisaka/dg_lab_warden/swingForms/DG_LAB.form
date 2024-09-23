@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.wastingmisaka.dg_lab_warden.swingForms.DG_LAB">
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="8" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+    <margin top="0" left="5" bottom="0" right="30"/>
     <constraints>
-      <xy x="20" y="20" width="660" height="793"/>
+      <xy x="20" y="20" width="699" height="793"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -75,7 +75,7 @@
               <text value="会话状态"/>
             </properties>
           </component>
-          <grid id="cd338" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="cd338" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="3" column="0" row-span="3" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -85,7 +85,7 @@
             <children>
               <component id="bf01" class="javax.swing.JLabel" binding="QRCode_show">
                 <constraints>
-                  <grid row="0" column="1" row-span="4" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
+                  <grid row="0" column="2" row-span="4" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false">
                     <minimum-size width="400" height="400"/>
                     <preferred-size width="400" height="400"/>
                     <maximum-size width="400" height="400"/>
@@ -97,23 +97,7 @@
               </component>
               <component id="5e2f7" class="javax.swing.JLabel" binding="a_current_show">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Label"/>
-                </properties>
-              </component>
-              <component id="3fcf7" class="javax.swing.JLabel" binding="b_current_show">
-                <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Label"/>
-                </properties>
-              </component>
-              <component id="3540" class="javax.swing.JLabel" binding="a_max_show">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Label"/>
@@ -121,7 +105,23 @@
               </component>
               <component id="ef7b0" class="javax.swing.JLabel" binding="b_max_show">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Label"/>
+                </properties>
+              </component>
+              <component id="3fcf7" class="javax.swing.JLabel" binding="b_current_show">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Label"/>
+                </properties>
+              </component>
+              <component id="3540" class="javax.swing.JLabel" binding="a_max_show">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Label"/>
@@ -136,19 +136,6 @@
           <grid row="6" column="2" row-span="2" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="e3e0" class="javax.swing.JSlider" binding="fire_slider">
-        <constraints>
-          <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <maximum value="200"/>
-          <paintLabels value="true"/>
-          <paintTicks value="true"/>
-          <paintTrack value="true"/>
-          <toolTipText value="设置一键开火的强度"/>
-          <value value="30"/>
-        </properties>
-      </component>
       <component id="3a531" class="javax.swing.JButton" binding="FIRE">
         <constraints>
           <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -156,28 +143,6 @@
         <properties>
           <text value="一键开火！"/>
         </properties>
-      </component>
-      <component id="f48f" class="javax.swing.JLabel" binding="slider_label">
-        <constraints>
-          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="一键开火：30"/>
-        </properties>
-      </component>
-      <component id="ed0cc" class="javax.swing.JLabel" binding="p">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="手动修改强度："/>
-        </properties>
-      </component>
-      <component id="f86dd" class="javax.swing.JSlider" binding="current_slider">
-        <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
       </component>
       <component id="40fcb" class="javax.swing.JCheckBox" binding="a_current_checkbox">
         <constraints>
@@ -227,6 +192,41 @@
         <properties>
           <selected value="true"/>
           <text value="警告 +5"/>
+        </properties>
+      </component>
+      <scrollpane id="812ea">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="fcff" class="javax.swing.JList" binding="pulse_select">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="283cb" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="波形选择"/>
+        </properties>
+      </component>
+      <component id="f5913" class="javax.swing.JSpinner" binding="fire_spinner">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="bfbfa" class="javax.swing.JLabel" binding="fire_label">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="一键开火强度"/>
         </properties>
       </component>
     </children>

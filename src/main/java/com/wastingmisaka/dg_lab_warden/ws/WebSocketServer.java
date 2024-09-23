@@ -59,10 +59,10 @@ public class WebSocketServer extends WebSocketAdapter {
             int ed = msg.indexOf("\",\"ta");
             String sub_msg = msg.substring(st+1, ed);
             String[] split = sub_msg.split("\\+");
-            a_current = Integer.parseInt(split[0]);
-            b_current = Integer.parseInt(split[1]);
-            a_max = Integer.parseInt(split[2]);
-            b_max = Integer.parseInt(split[3]);
+            current_current[1] = Integer.parseInt(split[0]);
+            current_current[2] = Integer.parseInt(split[1]);
+            current_max[1] = Integer.parseInt(split[2]);
+            current_max[2] = Integer.parseInt(split[3]);
         }
     }
 }
