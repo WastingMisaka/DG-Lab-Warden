@@ -12,7 +12,6 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.wastingmisaka.dg_lab_warden.swingForms.DG_LAB" id="hso!" canCloseContents="true"
                     anchor="right"></toolWindow>
-        <editorFactoryListener implementation="com.wastingmisaka.dg_lab_warden.Punish.PasteListener"/>
     </extensions>
 
     <actions>
