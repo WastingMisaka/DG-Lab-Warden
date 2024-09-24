@@ -160,14 +160,6 @@ public class DG_LAB implements ToolWindowFactory {
                 FIRE.setText("一键开火");
             }
         });
-        // 测试用按钮
-        test111.addActionListener(g -> {
-            try {
-                messageSender.message_entry("pulse",1,"节奏步伐",30);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
 
         //波形选择面板
         String[] options1 = {"呼吸","潮汐","连击","快速按捏","按捏渐强",
@@ -181,7 +173,10 @@ public class DG_LAB implements ToolWindowFactory {
             public void valueChanged(ListSelectionEvent e) {
                 if(!e.getValueIsAdjusting()){
                     String selected = (String)pulse_select.getSelectedValue();
-                    current_pulse = selected;
+                    if(selected!=null)
+                        current_pulse = selected;
+                    else
+                        current_pulse = "empty";
                 }
             }
         });
