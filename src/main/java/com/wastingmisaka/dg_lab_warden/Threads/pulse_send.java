@@ -2,7 +2,6 @@ package com.wastingmisaka.dg_lab_warden.Threads;
 
 import com.wastingmisaka.dg_lab_warden.messageUtils.MessageSender;
 
-import javax.swing.*;
 import java.io.IOException;
 
 import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.current_pulse;
