@@ -4,8 +4,7 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 
 import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.*;
-import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.progress_server;
-import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.progress_session;
+import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.*;
 
 import java.io.IOException;
 
@@ -15,9 +14,6 @@ public class WebSocketServer extends WebSocketAdapter {
         progress_session = session;
         super.onWebSocketConnect(session);
         System.out.println("WebSocket opened: " + session.getRemoteAddress().getHostString());
-        // 发送绑定信息
-        //{"clientId":"APP","message":"targetId","targetId":"","type":"bind"}
-        //Message(type=bind, message=200, clientId=Server, targetId=APP)
         try {
             getSession().getRemote().sendString("{\"clientId\":\"APP\",\"message\":\"targetId\",\"targetId\":\"\",\"type\":\"bind\"}");
             try {

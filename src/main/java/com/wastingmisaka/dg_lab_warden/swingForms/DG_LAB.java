@@ -19,7 +19,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -60,12 +59,6 @@ public class DG_LAB implements ToolWindowFactory {
     private JSpinner warning_spinner;
 
     MessageSender messageSender = new MessageSender();
-    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-    public JComponent getComponent() {
-        return panel1;
-    }
-
     public void run(){
         new pulse_send().start();
         new StaticCodeChecker().start();
@@ -108,6 +101,11 @@ public class DG_LAB implements ToolWindowFactory {
                 switcher.setText("关闭连接");
                 MainFunction = 1;
             }else{
+                try {
+                    messageSender.message_entry("break",0,"0",0);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 // 关闭当前的会话和服务器
                 if(progress_session!=null)
                     progress_session.close();
@@ -197,11 +195,9 @@ public class DG_LAB implements ToolWindowFactory {
             //轮盘Listener
             error_spinner.addChangeListener(changeEvent -> {
                 up_per_error = (int)error_spinner.getValue();
-                System.out.println("---error_spinner: "+up_per_error);
             });
             warning_spinner.addChangeListener(changeEvent -> {
                 up_per_warning = (int)warning_spinner.getValue();
-                System.out.println("---warning_spinner: "+up_per_warning);
             });
         }
         // 复选框Listener
@@ -228,7 +224,6 @@ public class DG_LAB implements ToolWindowFactory {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
             }
         });
         b_checkBox.addChangeListener(changeEvent -> {

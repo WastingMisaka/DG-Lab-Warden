@@ -1,21 +1,25 @@
 package com.wastingmisaka.dg_lab_warden.messageUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.*;
 import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.*;
 
 public class MessageSender {
+
     // 消息格式： MSG + msg + MSG_end
     String MSG = "{\"clientId\":\"Server\",\"targetId\":\"APP\",\"type\":\"msg\",\"message\":\"";
     String MSG_end = "\"}";
 
-
+    List<String> pulse_list = new ArrayList<>();
     public void send_message(String msg,String type) throws IOException {
         System.out.println("==========----sended msg: "+msg);
         progress_session.getRemote().sendString(msg);
     }
     public void message_entry(String type,int channel,String mode,int num)throws IOException{
+        if(progress_session==null) return;
         if(channel == 1 && !a_enabled) return;
         if(channel == 2 && !b_enabled) return;
         String back="";
@@ -43,6 +47,10 @@ public class MessageSender {
             back = "{\"clientId\":\"Server\",\"targetId\":\"APP\",\"type\":\"break\",\"message\":\"209\"}";
             send_message(back,type);
             return;
+        }
+        // 清除队列中的波形数据
+        else if(type.equals("clear")){
+            back = "clear-"+channel;
         }
         send_message(qp(back),type);
     }
