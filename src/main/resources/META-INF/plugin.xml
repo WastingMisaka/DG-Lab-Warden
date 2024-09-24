@@ -5,16 +5,12 @@
 
     <vendor email="forelink@foxmail.com" url="forelink.top">ForeLink</vendor>
 
-    <description>A plugin for connecting DG Lab to your IDEA, and punishing you for coding in the wrong way( bad code insight, compiler errors, etc.) Still WIP</description>
+    <description>A plugin for connecting DG Lab to your IDEA, and punishing you for coding in the wrong way( bad code inspection, compiler errors, etc.) Still WIP</description>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.wastingmisaka.dg_lab_warden.swingForms.DG_LAB" id="hso!" canCloseContents="true"
+        <toolWindow factoryClass="com.wastingmisaka.dg_lab_warden.swingForms.DG_LAB" id="DG-LAB" canCloseContents="true"
                     anchor="right"></toolWindow>
     </extensions>
-
-    <actions>
-
-    </actions>
 </idea-plugin>
