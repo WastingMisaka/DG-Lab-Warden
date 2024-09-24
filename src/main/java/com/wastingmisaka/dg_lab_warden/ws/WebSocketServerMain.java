@@ -10,11 +10,9 @@ import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.*;
 
 public class WebSocketServerMain {
     public static void main(String[] args) {
-        System.out.println("-=-=-=WebSocketServerMain-=-=-=");
         InetSocketAddress addr = new InetSocketAddress(IP, Integer.parseInt(Port));
         Server server = new Server(addr);
         progress_server = server;
-        System.out.println("WebSocketServerOpenOn : " + IP + ":" + Port);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");

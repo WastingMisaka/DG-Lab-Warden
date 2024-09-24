@@ -181,7 +181,6 @@ public class DG_LAB implements ToolWindowFactory {
             public void valueChanged(ListSelectionEvent e) {
                 if(!e.getValueIsAdjusting()){
                     String selected = (String)pulse_select.getSelectedValue();
-                    System.out.println("---selected pulse: "+selected);
                     current_pulse = selected;
                 }
             }
@@ -304,7 +303,6 @@ public class DG_LAB implements ToolWindowFactory {
     public void control_QRCode(){
         if(MainFunction==0){
             String qrContent = URL_prefix + IP + ":"+Port+URL_suffix;
-            System.out.println("QRCode: "+qrContent);
             BufferedImage qrImage = QRCode.generateQRCodeImage(qrContent,200,200);
             QRCode_show.setText("");
             QRCode_show.setIcon(new ImageIcon(qrImage));

@@ -13,7 +13,6 @@ public class WebSocketServer extends WebSocketAdapter {
     public void onWebSocketConnect(Session session) {
         progress_session = session;
         super.onWebSocketConnect(session);
-        System.out.println("WebSocket opened: " + session.getRemoteAddress().getHostString());
         try {
             getSession().getRemote().sendString("{\"clientId\":\"APP\",\"message\":\"targetId\",\"targetId\":\"\",\"type\":\"bind\"}");
             try {
@@ -29,10 +28,11 @@ public class WebSocketServer extends WebSocketAdapter {
 
     @Override
     public void onWebSocketText(String message) {
-        System.out.println("Received message: " + message);
         try {
             get_data(message);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -46,8 +46,5 @@ public class currentVar {
         }catch (IOException e){
             e.printStackTrace();
         }
-
-        pulse_data.forEach((k, v)->System.out.println(k+"---"+v));
-
     }
 }

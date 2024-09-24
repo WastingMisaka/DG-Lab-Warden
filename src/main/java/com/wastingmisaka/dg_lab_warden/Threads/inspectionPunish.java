@@ -15,7 +15,6 @@ public class inspectionPunish extends Thread{
     long error_weight = 10;
     MessageSender messageSender = new MessageSender();
     public void run() {
-        System.out.println("--静态代码检查--");
         while(true){
             if(progress_session==null){
                 try {
