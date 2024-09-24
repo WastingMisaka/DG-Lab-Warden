@@ -13,6 +13,8 @@ import com.wastingmisaka.dg_lab_warden.ws.wsThread;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -41,10 +43,10 @@ public class DG_LAB implements ToolWindowFactory {
     private JLabel QRCode_show;
     private JLabel server_status;
     private JLabel session_status;
-    private JCheckBox a_current_checkbox;
-    private JCheckBox b_current_checkbox;
-    private JCheckBox 错误30CheckBox;
-    private JCheckBox 警告5CheckBox;
+    private JCheckBox a_checkBox;
+    private JCheckBox b_checkBox;
+    private JCheckBox error_checkBox;
+    private JCheckBox warning_checkBox;
     private JList pulse_select;
     private JSpinner fire_spinner;
     private JLabel fire_label;
@@ -80,8 +82,12 @@ public class DG_LAB implements ToolWindowFactory {
             if(MainFunction==0){
                 IP = ip_text.getText();
                 Port = port_text.getText();
-                if(!check_ip_vaild(IP)){
+                if(!check_ip_valid(IP)){
                     JOptionPane.showMessageDialog(null,"IP地址不合法","错误",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if(!check_port_valid(Port)){
+                    JOptionPane.showMessageDialog(null,"端口号不合法","错误",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 // 开启 ws
@@ -111,6 +117,9 @@ public class DG_LAB implements ToolWindowFactory {
            // 归零按钮
         set_zero.addActionListener(g ->{
             try {
+                // TODO set zero : checkbox disable auto-increment
+                error_checkBox.setSelected(false);
+                warning_checkBox.setSelected(false);
                 messageSender.message_entry("strength",1,"2",0);
                 messageSender.message_entry("strength",2,"2",0);
             } catch (IOException ex) {
@@ -169,11 +178,34 @@ public class DG_LAB implements ToolWindowFactory {
                 }
             }
         });
-
+        // Spinner
         {
             fire_spinner.setModel(new SpinnerNumberModel(30, 0, 200, 5));
-
         }
+        // 复选框Listener
+        error_checkBox.addChangeListener(changeEvent -> {
+            if(error_checkBox.isSelected())
+                error_enabled = true;
+            else error_enabled = false;
+        });
+        warning_checkBox.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                if(warning_checkBox.isSelected())
+                    warning_enabled = true;
+                else warning_enabled = false;
+            }
+        });
+        a_checkBox.addChangeListener(changeEvent -> {
+            if(a_checkBox.isSelected())
+                a_enabled = true;
+            else a_enabled = false;
+        });
+        b_checkBox.addChangeListener(changeEvent -> {
+            if(b_checkBox.isSelected())
+                b_enabled = true;
+            else b_enabled = false;
+        });
     }
 
     Timer update_current = new Timer(1000, e -> {
@@ -209,7 +241,7 @@ public class DG_LAB implements ToolWindowFactory {
         }
     }
 
-    public boolean check_ip_vaild(String ip){
+    public boolean check_ip_valid(String ip){
         if(ip.length()<7||ip.length()>15) return false;
         for(int i=0;i<ip.length();i++){
             if(!Character.isDigit(ip.charAt(i))&&ip.charAt(i)!='.'){
@@ -224,6 +256,14 @@ public class DG_LAB implements ToolWindowFactory {
             if(temp_int<0||temp_int>255)   return false;
         }
         return true;
+    }
+    public boolean check_port_valid(String port){
+        if(port.isEmpty()||port.length()>5) return false;
+        for(int i=0;i<port.length();i++){
+            if(port.charAt(i)<'0'||port.charAt(i)>'9') return false;
+        }
+        int p = Integer.parseInt(port);
+        return p >= 0 && p <= 65535;
     }
 
     public void control_QRCode(){

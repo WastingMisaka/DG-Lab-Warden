@@ -17,6 +17,7 @@ public class inspectionPunish extends Thread{
             if(progress_session==null){
                 try {
                     Thread.sleep(1000);
+                    continue;
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

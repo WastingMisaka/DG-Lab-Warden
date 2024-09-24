@@ -38,8 +38,14 @@ public class StaticCodeChecker extends Thread{
                                 .filter(info -> info.getSeverity() == HighlightSeverity.ERROR)
                                 .count();
                         // 更新当前的错误数和警告数
-                        warning_count = warnings;
-                        error_count = errors;
+                        if(warning_enabled)
+                            warning_count = warnings;
+                        else warning_count = 0;
+                        if(error_enabled)
+                            error_count = errors;
+                        else error_count = 0;
+//                        System.out.println("warning_enabled: "+warning_enabled+" warning_count: "+warning_count + " " + "\n" +
+//                                "error_enabled: "+error_enabled+" error_count: "+error_count);
                     }
                 }
             }

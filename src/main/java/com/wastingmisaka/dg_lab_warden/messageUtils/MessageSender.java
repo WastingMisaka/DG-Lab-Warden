@@ -15,7 +15,7 @@ public class MessageSender {
         System.out.println("==========----sended msg: "+msg);
         progress_session.getRemote().sendString(msg);
     }
-    public String message_entry(String type,int channel,String mode,int num)throws IOException{
+    public void message_entry(String type,int channel,String mode,int num)throws IOException{
         String back="";
         if(type.equals("strength")){
             // 设定值是否超过上限
@@ -37,7 +37,6 @@ public class MessageSender {
         else if(type.equals("heartbeat")){
         }
         send_message(qp(back),type);
-        return "200";
     }
     // 补充消息前后部分
     public String qp(String t){
