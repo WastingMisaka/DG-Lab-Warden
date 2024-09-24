@@ -3,7 +3,7 @@ package com.wastingmisaka.dg_lab_warden.messageUtils;
 import java.io.IOException;
 
 import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.*;
-import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.progress_session;
+import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.*;
 
 public class MessageSender {
     // 消息格式： MSG + msg + MSG_end
@@ -16,6 +16,8 @@ public class MessageSender {
         progress_session.getRemote().sendString(msg);
     }
     public void message_entry(String type,int channel,String mode,int num)throws IOException{
+        if(channel == 1 && !a_enabled) return;
+        if(channel == 2 && !b_enabled) return;
         String back="";
         if(type.equals("strength")){
             // 设定值是否超过上限

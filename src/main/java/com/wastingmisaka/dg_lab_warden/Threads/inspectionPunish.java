@@ -4,13 +4,15 @@ import com.wastingmisaka.dg_lab_warden.messageUtils.MessageSender;
 
 import java.io.IOException;
 
+import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.up_per_error;
+import static com.wastingmisaka.dg_lab_warden.staticVar.currentVar.up_per_warning;
 import static com.wastingmisaka.dg_lab_warden.staticVar.statusVar.*;
 
 public class inspectionPunish extends Thread{
     long warning_active=0;
     long error_active=0;
     long warning_weight = 5;
-    long error_weight = 30;
+    long error_weight = 10;
     MessageSender messageSender = new MessageSender();
     public void run() {
         while(true){
@@ -24,6 +26,9 @@ public class inspectionPunish extends Thread{
             }
             // 静态代码检查 警告、错误数变化
             if(warning_active!=warning_count||error_active!=error_count){
+                // 更新本地使用的强度值
+                error_weight = up_per_error;
+                warning_weight = up_per_warning;
                 long modify = (warning_count-warning_active)*warning_weight+(error_count-error_active)*error_weight;
                 // 增加错误
                 if(modify>0){

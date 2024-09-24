@@ -50,13 +50,14 @@ public class DG_LAB implements ToolWindowFactory {
     private JCheckBox warning_checkBox;
     private JList pulse_select;
     private JSpinner fire_spinner;
-    private JLabel fire_label;
     private JPanel MainPanel;
     private JPanel Layer1;
     private JPanel Layer2;
     private JPanel Layer2Data;
     private JPanel Layer2QRCode;
     private JPanel Layer3;
+    private JSpinner error_spinner;
+    private JSpinner warning_spinner;
 
     MessageSender messageSender = new MessageSender();
     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -85,9 +86,6 @@ public class DG_LAB implements ToolWindowFactory {
         b_current_show.setText(current_default[2]);
         a_max_show.setText(current_default[3]);
         b_max_show.setText(current_default[4]);
-//        // 初始化二维码大小
-//        QRCode_show.setMinimumSize(new Dimension(200,200));
-//        QRCode_show.setMaximumSize(new Dimension(200,200));
         // 添加按钮监听
             // 功能开关
         switcher.addActionListener(e ->{
@@ -193,6 +191,18 @@ public class DG_LAB implements ToolWindowFactory {
         // Spinner
         {
             fire_spinner.setModel(new SpinnerNumberModel(30, 0, 200, 5));
+            error_spinner.setModel(new SpinnerNumberModel(10, 0, 200, 5));
+            warning_spinner.setModel(new SpinnerNumberModel(5, 0, 200, 5));
+
+            //轮盘Listener
+            error_spinner.addChangeListener(changeEvent -> {
+                up_per_error = (int)error_spinner.getValue();
+                System.out.println("---error_spinner: "+up_per_error);
+            });
+            warning_spinner.addChangeListener(changeEvent -> {
+                up_per_warning = (int)warning_spinner.getValue();
+                System.out.println("---warning_spinner: "+up_per_warning);
+            });
         }
         // 复选框Listener
         error_checkBox.addChangeListener(changeEvent -> {
@@ -211,12 +221,27 @@ public class DG_LAB implements ToolWindowFactory {
         a_checkBox.addChangeListener(changeEvent -> {
             if(a_checkBox.isSelected())
                 a_enabled = true;
-            else a_enabled = false;
+            else{
+                try {
+                    messageSender.message_entry("strength",1,"2",0);
+                    a_enabled = false;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
         });
         b_checkBox.addChangeListener(changeEvent -> {
             if(b_checkBox.isSelected())
                 b_enabled = true;
-            else b_enabled = false;
+            else{
+                try {
+                    messageSender.message_entry("strength",2,"2",0);
+                    b_enabled = false;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
     }
 

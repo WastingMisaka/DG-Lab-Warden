@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 // 存放在堆中，和电流有关的全局变量
 public class currentVar {
     // 电流信息
-//    public static int a_current = 0;
-//    public static int b_current = 0;
-//    public static int a_max = 0;
-//    public static int b_max = 0;
     public static int[] current_current={0,0,0,0};
     public static int[] current_max={0,0,0,0};
     public static String current_pulse="";
 
     // 一键开火记录数值
     public static int fire_current = 30;
+
+    // 单个静态错误强度
+    public static int up_per_error = 10;
+    public static int up_per_warning = 5;
 
     // TODO +波形
     public static Map<String,String> pulse_data = new HashMap<>();
