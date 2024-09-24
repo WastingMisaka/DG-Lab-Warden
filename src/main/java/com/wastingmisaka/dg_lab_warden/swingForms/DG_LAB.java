@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -37,7 +38,7 @@ public class DG_LAB implements ToolWindowFactory {
     private JButton set_zero;
     private JButton test111;
     private JButton FIRE;
-    private JPanel mainPanel;
+    private JPanel panel1;
     private JTextField ip_text;
     private JTextField port_text;
     private JLabel QRCode_show;
@@ -50,10 +51,18 @@ public class DG_LAB implements ToolWindowFactory {
     private JList pulse_select;
     private JSpinner fire_spinner;
     private JLabel fire_label;
+    private JPanel MainPanel;
+    private JPanel Layer1;
+    private JPanel Layer2;
+    private JPanel Layer2Data;
+    private JPanel Layer2QRCode;
+    private JPanel Layer3;
 
     MessageSender messageSender = new MessageSender();
+    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
     public JComponent getComponent() {
-        return mainPanel;
+        return panel1;
     }
 
     public void run(){
@@ -76,6 +85,9 @@ public class DG_LAB implements ToolWindowFactory {
         b_current_show.setText(current_default[2]);
         a_max_show.setText(current_default[3]);
         b_max_show.setText(current_default[4]);
+//        // 初始化二维码大小
+//        QRCode_show.setMinimumSize(new Dimension(200,200));
+//        QRCode_show.setMaximumSize(new Dimension(200,200));
         // 添加按钮监听
             // 功能开关
         switcher.addActionListener(e ->{
@@ -208,11 +220,14 @@ public class DG_LAB implements ToolWindowFactory {
         });
     }
 
+
     Timer update_current = new Timer(1000, e -> {
-        a_current_show.setText("A通道强度："+current_current[1]);
-        b_current_show.setText("B通道强度："+current_current[2]);
-        a_max_show.setText("A通道上限："+current_max[1]);
-        b_max_show.setText("B通道上限："+current_max[2]);
+        if(progress_session!=null){
+            a_current_show.setText("A通道强度："+current_current[1]);
+            b_current_show.setText("B通道强度："+current_current[2]);
+            a_max_show.setText("A通道上限："+current_max[1]);
+            b_max_show.setText("B通道上限："+current_max[2]);
+        }
     });
 
     Timer update_connect_status = new Timer(1000, e -> {
@@ -236,7 +251,7 @@ public class DG_LAB implements ToolWindowFactory {
         final ContentFactory factory = ContentFactory.getInstance();
         {
             run();
-            final Content content1 = factory.createContent(mainPanel, "", false);
+            final Content content1 = factory.createContent(MainPanel, "", false);
             toolWindow.getContentManager().addContent(content1);
         }
     }
@@ -270,7 +285,7 @@ public class DG_LAB implements ToolWindowFactory {
         if(MainFunction==0){
             String qrContent = URL_prefix + IP + ":"+Port+URL_suffix;
             System.out.println("QRCode: "+qrContent);
-            BufferedImage qrImage = QRCode.generateQRCodeImage(qrContent,300,300);
+            BufferedImage qrImage = QRCode.generateQRCodeImage(qrContent,200,200);
             QRCode_show.setText("");
             QRCode_show.setIcon(new ImageIcon(qrImage));
         }else{

@@ -35,6 +35,12 @@ public class MessageSender {
         }
         // TODO 发送心跳包(5分钟空闲连接会被中断）
         else if(type.equals("heartbeat")){
+
+        }
+        else if(type.equals("break")){
+            back = "{\"clientId\":\"Server\",\"targetId\":\"APP\",\"type\":\"break\",\"message\":\"209\"}";
+            send_message(back,type);
+            return;
         }
         send_message(qp(back),type);
     }
