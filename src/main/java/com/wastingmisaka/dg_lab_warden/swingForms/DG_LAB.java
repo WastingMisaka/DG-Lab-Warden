@@ -35,7 +35,6 @@ public class DG_LAB implements ToolWindowFactory {
     private JLabel a_max_show;
     private JLabel b_max_show;
     private JButton set_zero;
-    private JButton test111;
     private JButton FIRE;
     private JPanel panel1;
     private JTextField ip_text;
@@ -135,7 +134,6 @@ public class DG_LAB implements ToolWindowFactory {
             }
 
         });
-          // 开火设置成不能自行在APP降低强度？
         FIRE.addActionListener(f -> {
             if(firing == 0){
                 fire_current = (int)fire_spinner.getValue();

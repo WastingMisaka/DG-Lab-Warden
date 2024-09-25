@@ -26,25 +26,52 @@ public class currentVar {
     // TODO +波形
     public static Map<String,String> pulse_data = new HashMap<>();
     public static void wave_init(){
-        ClassLoader classLoader = currentVar.class.getClassLoader();
-
-        try{
-            InputStream inputStream = classLoader.getResourceAsStream("wave.txt");
-            if(inputStream == null){
-                throw new IOException("Resource not found : pulse_data.txt");
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            List<String> lines = reader.lines().collect(Collectors.toList());
-            int cnt = 0;
-            cnt = Integer.parseInt(lines.get(0));
-            for(int i=1;i<=cnt;i++){
-                int sp = lines.get(i).indexOf(":");
-                String name = lines.get(i).substring(0,sp);
-                String value = lines.get(i).substring(sp+1);
-                pulse_data.put(name,value);
-            }
-        }catch (IOException e){
-            e.printStackTrace();
+        String[] name_list = {"呼吸","潮汐","连击","快速按捏","按捏渐强",
+                "心跳节奏","压缩","节奏步伐","颗粒摩擦","渐变弹跳","波浪涟漪",
+                "雨水冲刷","变速敲击","信号灯","挑逗01","挑逗02"
+        };
+        String[] pulse_list = {
+                "\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00050a14\\\",\\\"0a0a0a0a14191e28\\\",\\\"0a0a0a0a282d323c\\\",\\\"0a0a0a0a3c414650\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0000000000000000\\\",\\\"0000000000000000\\\",\\\"0000000000000000\\\"",
+                "\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00040811\\\",\\\"0a0a0a0a11151921\\\",\\\"0a0a0a0a32323232\\\",\\\"0a0a0a0a32363a43\\\",\\\"0a0a0a0a43474b53\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a6462605c\\\",\\\"0a0a0a0a5c5a5854\\\",\\\"0a0a0a0a5452504c\\\",\\\"0a0a0a0a44444444\\\"",
+                "\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a645c5443\\\",\\\"0a0a0a0a433a3221\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000001\\\",\\\"0a0a0a0a02020202\\\"",
+                "\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a64646464\\\",\\\"0000000000000000\\\"",
+                "\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a1d1d1d1d\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a34343434\\\",\\\"0a0a0a0a02020202\\\",\\\"0a0a0a0a49494949\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a57575757\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\"",
+                "\\\"6e6e6e6e64646464\\\",\\\"6e6e6e6e64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a4b4b4b4b\\\",\\\"0a0a0a0a4b4d4f53\\\",\\\"0a0a0a0a5355585c\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\"",
+                "\\\"1919181864646464\\\",\\\"1817171764646464\\\",\\\"1616161564646464\\\",\\\"1515141464646464\\\",\\\"1413131364646464\\\",\\\"1212121164646464\\\",\\\"1110101064646464\\\",\\\"0f0f0f0e64646464\\\",\\\"0e0e0d0d64646464\\\",\\\"0d0c0c0c64646464\\\",\\\"0b0b0b0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\"",
+                "\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00050a14\\\",\\\"0a0a0a0a14191e28\\\",\\\"0a0a0a0a282d323c\\\",\\\"0a0a0a0a3c414650\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00060c19\\\",\\\"0a0a0a0a191f2632\\\",\\\"0a0a0a0a32383e4b\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00081021\\\",\\\"0a0a0a0a212a3243\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a000c1932\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a64646464\\\"",
+                "\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\"",
+                "\\\"0a0a0a0a01010101\\\",\\\"0a0a0a0a01091222\\\",\\\"0a0a0a0a222a3243\\\",\\\"0a0a0a0a64646464\\\",\\\"0000000000000000\\\",\\\"0000000000000000\\\"",
+                "\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a000c1932\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a49494949\\\"",
+                "\\\"0a0a0a0a22222222\\\",\\\"0a0a0a0a222a3243\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0000000000000000\\\",\\\"0000000000000000\\\"",
+                "\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"6e6e6e6e64646464\\\",\\\"6e6e6e6e64646464\\\",\\\"6e6e6e6e64646464\\\",\\\"6e6e6e6e64646464\\\",\\\"0000000000000000\\\"",
+                "\\\"c5c5c5c564646464\\\",\\\"c5c5c5c564646464\\\",\\\"c5c5c5c564646464\\\",\\\"c5c5c5c564646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00081021\\\",\\\"0a0a0a0a212a3243\\\",\\\"0a0a0a0a64646464\\\"",
+                "\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00060c19\\\",\\\"0a0a0a0a191f2632\\\",\\\"0a0a0a0a32383e4b\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a00000000\\\",\\\"0a0a0a0a64646464\\\"",
+                "\\\"0a0a0a0a01010101\\\",\\\"0a0a0a0a0104060c\\\",\\\"0a0a0a0a0c0f1217\\\",\\\"0a0a0a0a171a1c22\\\",\\\"0a0a0a0a2225282d\\\",\\\"0a0a0a0a2d303238\\\",\\\"0a0a0a0a383b3e43\\\",\\\"0a0a0a0a4346484e\\\",\\\"0a0a0a0a4e515459\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a64646464\\\",\\\"0a0a0a0a00000000\\\",\\\"0000000000000000\\\""
+        };
+        for(int i=0;i<name_list.length;i++){
+            pulse_data.put(name_list[i],pulse_list[i]);
         }
+
+//        ClassLoader classLoader = currentVar.class.getClassLoader();
+//        try{
+//            InputStream inputStream = classLoader.getResourceAsStream("wave.txt");
+//            if(inputStream == null){
+//                throw new IOException("Resource not found : pulse_data.txt");
+//            }
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+//            List<String> lines = reader.lines().collect(Collectors.toList());
+//            int cnt = 0;
+//            cnt = Integer.parseInt(lines.get(0));
+//            for(int i=1;i<=cnt;i++){
+//                int sp = lines.get(i).indexOf(":");
+//                String name = lines.get(i).substring(0,sp);
+//                String value = lines.get(i).substring(sp+1);
+//                pulse_data.put(name,value);
+//            }
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
     }
+
+
 }
